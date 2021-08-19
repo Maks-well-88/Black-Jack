@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-class Diller
+require_relative '../modules/actions'
+
+class Dealer
+  include Actions
   attr_accessor :bank
 
   def initialize
