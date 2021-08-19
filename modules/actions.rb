@@ -10,6 +10,7 @@ module Actions
   end
 
   module InstanceMethods
+
     def skip; end
 
     def add_card; end
