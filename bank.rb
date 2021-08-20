@@ -11,12 +11,17 @@ class GameBank
     self.bid += 20
     user.bank -= 10
     dealer.bank -= 10
-    puts "\nНа кону #{self.bid} $."
   end
 
   def transfer_of_the_amount_to_the_winner(winner)
     self.bid = 0
     winner.bank += 20
     puts "На счету #{winner.name} - #{winner.bank} $."
+  end
+
+  def refunds_to_players(user, dealer)
+    self.bid = 0
+    user.bank += 10
+    dealer.bank += 10
   end
 end

@@ -23,13 +23,14 @@ class Interface
   # starting the game, the first deal of cards, transferring the bet to the bank
   def start_of_the_game
     system 'clear'
-    puts "#{user.name}, ваши карты:"
+    puts "#{user.name}, Ваши карты:"
     2.times { distribution_to_the_user }
     user_card_info
-    puts 'Карты дилера:'
+    puts "Карты #{dealer.name}: "
     2.times { distribution_to_the_dealer }
     dealer_card_info
     bank.place_a_bet(user, dealer)
+    puts "\nСтавка: #{bank.bid} $. Счёт игрока: #{user.bank} $, счёт дилера: #{dealer.bank} $."
     user_next_action
   end
 
@@ -100,6 +101,9 @@ class Interface
     elsif dealer.points > 21
       "Победа за #{user.name}! #{dealer.name} проиграл."
       bank.transfer_of_the_amount_to_the_winner(user)
+    else
+      puts "Ничья!"
+      bank.refunds_to_players(user, dealer)
     end
     continue_the_game
   end
