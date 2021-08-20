@@ -1,41 +1,50 @@
 # frozen_string_literal: true
 
-require_relative './modules/actions'
-require_relative 'deck'
-require_relative 'dealer'
-require_relative 'bank'
-require_relative 'user'
+require_relative './modules/actions.rb'
+require_relative 'deck.rb'
+require_relative 'dealer.rb'
+require_relative 'bank.rb'
+require_relative 'user.rb'
 
 class Interface
   include Actions
-  attr_reader :dealer, :deck, :bank, :user
-
-  user_card_store = []
-  dealer_card_store = []
+  attr_reader :dealer, :deck, :user
+  attr_accessor :user_card_store, :dealer_card_store, :bank
 
   def initialize(name)
     @user = User.new(name)
     @deck = CardDesk.new
     @dealer = Dealer.new
     @bank = GameBank.new
+    @user_card_store = []
+    @dealer_card_store = []
   end
 
-  def run
-    loop do
-      puts "#{user.name}, ваши карты:"
-      dealer.deal_of_two_cards(deck)
-      user.points = dealer.scored_points
-      puts "[#{dealer.two_cards[0]}] & [#{dealer.two_cards[1]}], #{dealer.scored_points} очков."
-      puts 'Карты дилера:'
-      dealer.deal_of_two_cards(deck)
-      puts '[**] & [**]'
-      dealer.points = dealer.scored_points
-      puts "У диллера реально #{dealer.points} очков"
-      print 'Хотите завершить игру? '
-      x = gets.chomp.to_i
-      break if x == 1
-    end
+  def start_of_the_game
+    puts "#{user.name}, ваши карты:"
+    distribution_to_the_user
+    puts 'Карты дилера:'
+    distribution_to_the_dealer
+    bank.place_a_bet(user, dealer)
   end
 
-  def counting_results; end
+  def distribution_to_the_user
+    user_card_store << dealer.give_card(deck, user)
+    user.points += dealer.scored_points
+    user_card_store << dealer.give_card(deck, user)
+    user.points += dealer.scored_points
+    puts "[#{user_card_store[0]}] & [#{user_card_store[1]}], очков: #{user.points}."
+  end
+
+  def distribution_to_the_dealer
+    dealer_card_store << dealer.give_card(deck, dealer)
+    dealer.points += dealer.scored_points
+    dealer_card_store << dealer.give_card(deck, dealer)
+    dealer.points += dealer.scored_points
+    puts '[**] & [**]'
+    puts "У диллера реально #{dealer.points} очков."
+  end
+
+
+
 end

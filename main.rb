@@ -4,4 +4,5 @@ require_relative 'text_interface'
 
 print 'Напишите, как вас зовут: '
 interface = Interface.new(gets.chomp.capitalize)
-interface.run
+system 'clear'
+interface.start_of_the_game

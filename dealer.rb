@@ -1,28 +1,32 @@
 # frozen_string_literal: true
 
 require_relative './modules/actions'
-require_relative 'deck'
 
 class Dealer
   include Actions
-  attr_accessor :bank, :two_cards, :points, :scored_points
+  attr_accessor :bank, :one_card, :points, :scored_points
 
   def initialize
     @points = 0
     @bank = 100
   end
 
-  def deal_of_two_cards(deck)
-    @two_cards = deck.cards.keys.sample(2)
-    count_points(deck)
-    deck.cards.delete(@two_cards[0])
-    deck.cards.delete(@two_cards[1])
+  def give_card(deck, person)
+    @one_card = deck.cards.keys.sample
+    count_points(deck, person)
+    deck.cards.delete(@one_card)
+    return @one_card
   end
 
-  def count_points(deck)
-    @scored_points = deck.cards[@two_cards[0]] + deck.cards[@two_cards[1]]
+  private
+  
+  def count_points(deck, person)
+    if deck.cards[@one_card].is_a?(Array) && person.points <= 10
+      @scored_points = deck.cards[@one_card][1]
+    elsif deck.cards[@one_card].is_a?(Array) && person.points > 10
+      @scored_points = deck.cards[@one_card][0]
+    else
+      @scored_points = deck.cards[@one_card]
+    end
   end
-
-
-
 end
