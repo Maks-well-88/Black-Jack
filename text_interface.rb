@@ -22,6 +22,7 @@ class Interface
 
   # starting the game, the first deal of cards, transferring the bet to the bank
   def start_of_the_game
+    system 'clear'
     puts "#{user.name}, ваши карты:"
     2.times { distribution_to_the_user }
     user_card_info
@@ -100,6 +101,7 @@ class Interface
       "Победа за #{user.name}! #{dealer.name} проиграл."
       bank.transfer_of_the_amount_to_the_winner(user)
     end
+    continue_the_game
   end
 
   # dealing cards to the player and removing the dealt cards from the deck
@@ -112,5 +114,14 @@ class Interface
   def distribution_to_the_dealer
     dealer_card_store << dealer.give_card(deck, dealer)
     dealer.points += dealer.scored_points
+  end
+
+  def continue_the_game
+    print 'Хотите продолжить игру? (yes / no): '
+    choice = gets.chomp
+    case choice
+    when 'no' then abort
+    when 'yes' then start_of_the_game
+    end
   end
 end
