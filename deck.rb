@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './modules/actions'
-
+# the class creates a deck of 52 cards
 class CardDesk
-  include Actions
-
   attr_accessor :cards
 
   def initialize

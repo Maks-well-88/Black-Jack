@@ -1,33 +1,32 @@
 # frozen_string_literal: true
 
-require_relative './modules/actions'
-
+# class creates a dealer who deals cards and counts points
 class Dealer
-  include Actions
-  attr_accessor :bank, :one_card, :points, :scored_points, :name
+  attr_accessor :card, :points, :scored_points, :name
 
   def initialize
     @name = 'Петрович'
     @points = 0
-    @bank = 100
   end
 
+  # issues a card from the deck 1 at a time
   def give_card(deck, person)
-    @one_card = deck.cards.keys.sample
-    count_points(deck, person)
-    deck.cards.delete(@one_card)
-    @one_card
+    self.card = deck.cards.keys.sample
+    self.scored_points = count_points(deck, person)
+    deck.cards.delete(card)
+    card
   end
 
   private
 
+  # counts card points after each deal
   def count_points(deck, person)
-    @scored_points = if deck.cards[@one_card].is_a?(Array) && person.points <= 10
-                       deck.cards[@one_card][1]
-                     elsif deck.cards[@one_card].is_a?(Array) && person.points > 10
-                       deck.cards[@one_card][0]
-                     else
-                       deck.cards[@one_card]
-                     end
+    if deck.cards[card].is_a?(Array) && person.points <= 10
+      deck.cards[card][1]
+    elsif deck.cards[card].is_a?(Array) && person.points > 10
+      deck.cards[card][0]
+    else
+      deck.cards[card]
+    end
   end
 end
