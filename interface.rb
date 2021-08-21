@@ -51,8 +51,7 @@ class Interface
   # skip the turn in favor of the dealer
   def skip_turn
     dealer.points < 17 ? distribution_to_the_dealer : nil
-    user_card_info
-    dealer_card_info
+    user_card_info && dealer_card_info if dealer_combination.size != 3 && user_combination.size != 3
     dealer_combination.size == 3 && user_combination.size == 3 ? complete_round : user_next_action
   end
 
