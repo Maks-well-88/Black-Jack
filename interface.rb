@@ -8,7 +8,7 @@ require_relative 'user'
 # class creates an interface for user interaction with the game
 class Interface
   attr_reader :dealer, :deck, :user
-  attr_accessor :user_combination, :dealer_combination, :bank
+  attr_accessor :user_cards, :dealer_cards, :bank
 
   def initialize(name)
     @user = User.new(name)
@@ -44,15 +44,16 @@ class Interface
 
   # add another card to the player
   def add_card_to_user
-    distribution_to_the_user unless user_combination.size == 3
-    dealer_combination.size == 3 ? complete_round : skip_turn
+    distribution_to_the_user unless user_cards.size == 3
+    dealer_cards.size == 3 ? complete_round : skip_turn
   end
 
   # skip the turn in favor of the dealer
   def skip_turn
     dealer.points < 17 ? distribution_to_the_dealer : nil
-    user_card_info && dealer_card_info if dealer_combination.size != 3 && user_combination.size != 3
-    dealer_combination.size == 3 && user_combination.size == 3 ? complete_round : user_next_action
+    user_card_info unless dealer_cards.size == 3 && user_cards.size == 3
+    dealer_card_info unless dealer_cards.size == 3 && user_cards.size == 3
+    dealer_cards.size == 3 && user_cards.size == 3 ? complete_round : user_next_action
   end
 
   # sums up the game, reveals the cards, announces the winners
@@ -68,8 +69,8 @@ class Interface
   # a new deck of cards is created and the count of cards is reset
   def create_new_card_layout
     @deck = CardDesk.new
-    @user_combination = []
-    @dealer_combination = []
+    @user_cards = []
+    @dealer_cards = []
     user.points = 0
     dealer.points = 0
   end
@@ -95,34 +96,34 @@ class Interface
 
   # withdraw the player's cards after the next move
   def user_card_info
-    user_combination.each { |card| print "[#{card}] " }
+    user_cards.each { |card| print "[#{card}] " }
     puts "Очков: #{user.points}"
   end
 
   # withdraw the dealer's cards after the next move
   def dealer_card_info
-    dealer_combination.each { |_card| print '[* *] ' }
+    dealer_cards.each { |_card| print '[* *] ' }
   end
 
   # show the player's and dealer's cards to summarize the game
   def open_all_cards
     print "#{user.name}: "
-    user_combination.each { |card| print "[#{card}] " }
+    user_cards.each { |card| print "[#{card}] " }
     puts "Очков: #{user.points}"
     print "#{dealer.name}: "
-    dealer_combination.each { |card| print "[#{card}] " }
+    dealer_cards.each { |card| print "[#{card}] " }
     puts "Очков: #{dealer.points}"
   end
 
   # dealing cards to the player and removing the dealt cards from the deck
   def distribution_to_the_user
-    user_combination << dealer.give_card(deck, user)
+    user_cards << dealer.give_card(deck, user)
     user.points += dealer.scored_points
   end
 
   # dealing cards to the dealer and removing the dealt cards from the deck
   def distribution_to_the_dealer
-    dealer_combination << dealer.give_card(deck, dealer)
+    dealer_cards << dealer.give_card(deck, dealer)
     dealer.points += dealer.scored_points
   end
 
