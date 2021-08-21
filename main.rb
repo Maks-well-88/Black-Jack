@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'text_interface'
+require_relative 'interface'
 
 puts 'Привет! Я - Петрович. Сегодня я буду дилером в нашей игре!'
 print 'А как тебя зовут? '
