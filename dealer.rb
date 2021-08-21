@@ -21,10 +21,8 @@ class Dealer
 
   # counts card points after each deal
   def count_points(deck, person)
-    if deck.cards[card].is_a?(Array) && person.points <= 10
-      deck.cards[card][1]
-    elsif deck.cards[card].is_a?(Array) && person.points > 10
-      deck.cards[card][0]
+    if deck.cards[card].is_a?(Array)
+      person.points <= 10 ? deck.cards[card][1] : deck.cards[card][0]
     else
       deck.cards[card]
     end
