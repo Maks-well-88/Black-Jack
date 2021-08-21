@@ -16,7 +16,6 @@ class GameBank
   def transfer_of_the_amount_to_the_winner(winner)
     self.bid = 0
     winner.bank += 20
-    puts "На счету #{winner.name} - #{winner.bank} $."
   end
 
   def refunds_to_players(user, dealer)

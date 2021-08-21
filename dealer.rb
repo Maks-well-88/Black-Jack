@@ -7,7 +7,7 @@ class Dealer
   attr_accessor :bank, :one_card, :points, :scored_points, :name
 
   def initialize
-    @name = 'Dealer'
+    @name = 'Петрович'
     @points = 0
     @bank = 100
   end
