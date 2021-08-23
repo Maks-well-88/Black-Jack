@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # the class creates a deck of 52 cards
-class CardDesk
+class Deck
   attr_accessor :cards
 
   def initialize

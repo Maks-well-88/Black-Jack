@@ -13,14 +13,14 @@ class Interface
   def initialize(name)
     @user = User.new(name)
     @dealer = Dealer.new
-    @bank = GameBank.new
+    @bank = Bank.new
   end
 
   # starting the round, the first deal of cards, transferring the bet to the bank
   def round_start
     create_new_card_layout
     bank.place_a_bet
-    print "Ставка: #{bank.bid}$. "
+    print "Ставка: #{bank.bid}$. \nДеньги: "
     show_players_money
     2.times { distribution_to_the_user }
     user_card_info
@@ -68,7 +68,7 @@ class Interface
 
   # a new deck of cards is created and the count of cards is reset
   def create_new_card_layout
-    @deck = CardDesk.new
+    @deck = Deck.new
     @user_cards = []
     @dealer_cards = []
     user.points = 0

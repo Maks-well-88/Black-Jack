@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # the class creates a bank for game bets: it accepts money in the bet and distributes the winnings
-class GameBank
+class Bank
   attr_accessor :bid, :user_money, :dealer_money
 
   def initialize
