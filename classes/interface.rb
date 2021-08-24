@@ -11,7 +11,7 @@ class Interface
   attr_accessor :user_cards, :dealer_cards, :bank
 
   def initialize(name)
-    @user = User.new(name)
+    @user = Dealer.new(name)
     @dealer = Dealer.new
     @bank = Bank.new
   end

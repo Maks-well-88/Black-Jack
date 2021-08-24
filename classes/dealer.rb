@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'user'
+
 # class creates a dealer who deals cards and counts points
-class Dealer
+class Dealer < User
   attr_accessor :card, :points, :scored_points, :name
 
-  def initialize
-    @name = 'Петрович'
-    @points = 0
+  def initialize(name = 'Петрович')
+    super
   end
 
   # issues a card from the deck 1 at a time
