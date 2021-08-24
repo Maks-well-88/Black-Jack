@@ -51,9 +51,9 @@ class Interface
   # skip the turn in favor of the dealer
   def skip_turn
     dealer.points < 17 ? distribution_to_the_dealer : nil
-    user_card_info unless dealer_cards.size == 3 && user_cards.size == 3
-    dealer_card_info unless dealer_cards.size == 3 && user_cards.size == 3
-    dealer_cards.size == 3 && user_cards.size == 3 ? complete_round : user_next_action
+    user_card_info unless dealer_cards.size >= 2 && user_cards.size == 3
+    dealer_card_info unless dealer_cards.size >= 2 && user_cards.size == 3
+    dealer_cards.size >= 2 && user_cards.size == 3 ? complete_round : user_next_action
   end
 
   # sums up the game, reveals the cards, announces the winners
