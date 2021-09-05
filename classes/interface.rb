@@ -19,7 +19,7 @@ class Interface
   # starting the round, the first deal of cards, transferring the bet to the bank
   def round_start
     create_new_card_layout
-    bank.place_a_bet
+    bank.place_a_bet(dealer, user)
     print "Ставка: #{bank.bid}$. \nДеньги: "
     show_players_money
     2.times { distribution_to_the_user }
@@ -91,7 +91,7 @@ class Interface
 
   # shows the status of players' accounts
   def show_players_money
-    puts "#{user.name}: #{bank.user_money}$, #{dealer.name}: #{bank.dealer_money}$."
+    puts "#{user.name}: #{user.money}$, #{dealer.name}: #{dealer.money}$."
   end
 
   # withdraw the player's cards after the next move
