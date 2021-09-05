@@ -4,7 +4,7 @@ require_relative 'user'
 
 # class creates a dealer who deals cards and counts points
 class Dealer < User
-  attr_accessor :card, :points, :scored_points, :name
+  attr_accessor :card, :scored_points
 
   def initialize(name = 'Петрович')
     super
@@ -15,6 +15,7 @@ class Dealer < User
     self.card = deck.cards.keys.sample
     self.scored_points = count_points(deck, person)
     deck.cards.delete(card)
+
     card
   end
 

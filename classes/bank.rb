@@ -2,30 +2,37 @@
 
 # the class creates a bank for game bets: it accepts money in the bet and distributes the winnings
 class Bank
-  attr_accessor :bid, :user_money, :dealer_money
+  attr_accessor :bid
 
   def initialize
-    @bid = 0
-    @user_money = 100
-    @dealer_money = 100
+    @bid = 20
   end
 
-  def place_a_bet
-    self.bid += 20
-    self.user_money -= 10
-    self.dealer_money -= 10
+  def place_a_bet(*persons)
+    persons.each do |person|
+      money_counting(person)
+      person.instance_variable_set :@money, @reduced_money
+    end
   end
 
-  def refunds_to_players
-    self.bid = 0
-    self.user_money += 10
-    self.dealer_money += 10
+  def refunds_to_players(*persons)
+    persons.each do |person|
+      money_counting(person)
+      person.instance_variable_set :@money, @increased_money
+    end
   end
 
-  def money_for_the_winner(winner)
-    self.bid = 0
-    num = send("#{winner}_money".to_sym)
-    num += 20
-    instance_variable_set "@#{winner}_money".to_sym, num
+  def money_for_the_winner(person)
+    money_counting(person)
+    person.instance_variable_set :@money, @gain
+  end
+
+  private
+
+  def money_counting(person)
+    current_amount = person.instance_variable_get :@money
+    @reduced_money = current_amount - (bid / 2)
+    @increased_money = current_amount + (bid / 2)
+    @gain = current_amount + bid
   end
 end
