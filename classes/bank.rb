@@ -10,23 +10,29 @@ class Bank
 
   def place_a_bet(*persons)
     persons.each do |person|
-      current_amount = person.instance_variable_get :@money
-      current_amount -= self.bid / 2
-      person.instance_variable_set :@money, current_amount
+      money_counting(person)
+      person.instance_variable_set :@money, @reduced_money
     end
   end
 
   def refunds_to_players(*persons)
     persons.each do |person|
-      current_amount = person.instance_variable_get :@money
-      current_amount += self.bid / 2
-      person.instance_variable_set :@money, current_amount
+      money_counting(person)
+      person.instance_variable_set :@money, @increased_money
     end
   end
 
-  def money_for_the_winner(winner)
-    current_amount = winner.instance_variable_get :@money
-    current_amount += self.bid
-    winner.instance_variable_set :@money, current_amount
+  def money_for_the_winner(person)
+    money_counting(person)
+    person.instance_variable_set :@money, @gain
+  end
+
+  private
+
+  def money_counting(person)
+    current_amount = person.instance_variable_get :@money
+    @reduced_money = current_amount - (bid / 2)
+    @increased_money = current_amount + (bid / 2)
+    @gain = current_amount + bid
   end
 end
