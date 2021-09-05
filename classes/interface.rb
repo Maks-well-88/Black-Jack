@@ -78,13 +78,13 @@ class Interface
   # function of calculating the results of the game
   def counting_results
     if (dealer.points > 21 && user.points > 21) || (dealer.points == user.points)
-      bank.refunds_to_players
+      bank.refunds_to_players(dealer, user)
       puts 'В этом раунде ничья!'
     elsif user.points > dealer.points && user.points <= 21 || dealer.points > 21
-      bank.money_for_the_winner('user')
+      bank.money_for_the_winner(user)
       puts "#{user.name}, вы выиграли!"
     elsif dealer.points > user.points && dealer.points <= 21 || user.points > 21
-      bank.money_for_the_winner('dealer')
+      bank.money_for_the_winner(dealer)
       puts "#{dealer.name}, вы выиграли!"
     end
   end
